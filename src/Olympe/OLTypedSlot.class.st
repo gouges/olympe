@@ -1,0 +1,37 @@
+Class {
+	#name : #OLTypedSlot,
+	#superclass : #InstanceVariableSlot,
+	#instVars : [
+		'type'
+	],
+	#category : #'Olympe-Slot'
+}
+
+{ #category : #initialization }
+OLTypedSlot >> printOn: aStream [
+	aStream
+		store: self name;
+		nextPutAll: ' => ';
+		nextPutAll: self class name;
+		nextPutAll: ' type: ';
+		store: type.
+
+]
+
+{ #category : #initialization }
+OLTypedSlot >> type: aClass [
+	self assert: aClass isClass.
+	type := aClass.
+]
+
+{ #category : #initialization }
+OLTypedSlot >> write: aValue to: anObject [
+	(aValue isKindOf: type)
+		ifFalse: [ self
+				error:
+					('Unexpected object type {1}. Type {2} expected'
+						format:
+							{aValue class printString.
+							type printString}) ].
+	^ super write: aValue to: anObject
+]
