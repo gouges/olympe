@@ -2,30 +2,51 @@ Class {
 	#name : #OLBlock,
 	#superclass : #OLObject,
 	#instVars : [
-		'#header => OLTypedSlot type: OLBlockHeader',
-		'#transactions => OLTypedSlot type: (OLTypedCollection typeFor: OLTransaction)'
+		'#header => OLSerializableSlot type: OLBlockHeader type',
+		'#transactions => OLSerializableSlot type: (OLTypedCollectionType typeFor: OLTransaction) type'
 	],
 	#category : #'Olympe-Core'
 }
 
-{ #category : #digest }
-OLBlock >> digest [
-	^ SHA256 hashMessage: self binary.
+{ #category : #'instance creation' }
+OLBlock class >> fromUnsubmittedBlock: anUnsubmittedBlock [
+	^ self new
+		header: anUnsubmittedBlock header;
+		transactions: anUnsubmittedBlock transactions;
+		yourself
 ]
 
 { #category : #accessing }
-OLBlock >> header: anOLBlockHeader [ 
-	header := anOLBlockHeader
+OLBlock >> header [
+	^ header
 ]
 
-{ #category : #'as yet unclassified' }
-OLBlock >> header: aHeader transactions: aCollection [
-	header := aHeader .
-	transactions := aCollection.
-	
+{ #category : #accessing }
+OLBlock >> header: aHeader [
+	header := aHeader.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
+OLBlock >> isGenesis [
+	^ header isGenesis
+]
+
+{ #category : #accessing }
+OLBlock >> number [
+	^ header number
+]
+
+{ #category : #accessing }
 OLBlock >> parentHash [
 	^ header parentHash
+]
+
+{ #category : #accessing }
+OLBlock >> transactions [
+	^ transactions
+]
+
+{ #category : #accessing }
+OLBlock >> transactions: aCol [
+	transactions := aCol
 ]

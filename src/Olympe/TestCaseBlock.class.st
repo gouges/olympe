@@ -32,7 +32,8 @@ TestCaseBlock >> testGenesisHasNoParent [
 
 { #category : #tests }
 TestCaseBlock >> testIsGenesis [
-	self assert: (OLBlockHeader number: 0 parentHash: nil) isGenesis.
-	self deny: (OLBlockHeader number: 2 parentHash: nil) isGenesis.
-	self deny: (OLBlockHeader number: 2 parentHash: 123) isGenesis
+	self
+		assert: (OLTestFactory createBlockNumber: 0 parentHash: nil repository: OLDictionaryRepository new) isGenesis.
+	self
+		deny: (OLTestFactory createBlockNumber: 2 parentHash: 234 repository: OLDictionaryRepository new) isGenesis
 ]

@@ -2,8 +2,8 @@ Class {
 	#name : #OLTypedCollection,
 	#superclass : #OLObject,
 	#instVars : [
-		'type',
-		'collection'
+		'collection',
+		'innerType'
 	],
 	#classInstVars : [
 		'subtypes'
@@ -20,25 +20,27 @@ OLTypedCollection class >> collection: aCollection typed: aType [
 					' The given collection contains objects that are not of the given type ' ].
 	object := self basicNew.
 	object instVarNamed: #collection put: aCollection.
-	object instVarNamed: #type put: aType.
+	object instVarNamed: #innerType put: aType.
 	object initialize.
 	^ object
 ]
 
 { #category : #'as yet unclassified' }
 OLTypedCollection class >> new [
-	^ self = OLTypedCollection
+	^ self = OLTypedCollectionType
 		ifTrue: [ self error: 'Use collection:typed: method ' ]
-		ifFalse: [ self collection: OrderedCollection new typed: self subtype ]
+		ifFalse: [ OLTypedCollection
+				collection: OrderedCollection new
+				typed: self subtype ]
 ]
 
 { #category : #accessing }
 OLTypedCollection class >> storeOn: aStream [
-	^ self = OLTypedCollection
+	^ self = OLTypedCollectionType
 		ifTrue: [ super storeOn: aStream ]
 		ifFalse: [ aStream
 				nextPut: $(;
-				nextPutAll: OLTypedCollection name;
+				nextPutAll: OLTypedCollectionType name;
 				nextPutAll: ' typeFor: ';
 				nextPutAll: self subtype name;
 				nextPut: $) ]
@@ -59,7 +61,7 @@ OLTypedCollection class >> typeFor: aClass [
 	^ self subtypes
 		at: aClass
 		ifAbsentPut: [ | class |
-			class := OLTypedCollection
+			class := OLTypedCollectionType
 				subclass: self name , aClass name
 				instanceVariableNames: ''
 				classVariableNames: ''
@@ -74,14 +76,19 @@ OLTypedCollection class >> typeFor: aClass [
 
 { #category : #adding }
 OLTypedCollection >> add: aValue [
-	(aValue isKindOf: type)
+	(aValue isKindOf: innerType)
 		ifFalse: [ ^ self
 				error:
 					('Unexpected object type {1}. Type {2} expected'
 						format:
 							{aValue class printString.
-							type printString}) ].
+							innerType printString}) ].
 	^ collection add: aValue
+]
+
+{ #category : #adding }
+OLTypedCollection >> innerType [
+	^ innerType
 ]
 
 { #category : #adding }

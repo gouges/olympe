@@ -14,19 +14,24 @@ OLTypedSlot >> printOn: aStream [
 		nextPutAll: ' => ';
 		nextPutAll: self class name;
 		nextPutAll: ' type: ';
-		store: type.
+		store: type; nextPutAll: ' type'.
 
+]
+
+{ #category : #accessing }
+OLTypedSlot >> type [
+	^ type
 ]
 
 { #category : #initialization }
 OLTypedSlot >> type: aClass [
-	self assert: aClass isClass.
+	self assert: aClass isType.
 	type := aClass.
 ]
 
 { #category : #initialization }
 OLTypedSlot >> write: aValue to: anObject [
-	(aValue isKindOf: type)
+	(aValue isNil or: [ type types: aValue ])
 		ifFalse: [ self
 				error:
 					('Unexpected object type {1}. Type {2} expected'

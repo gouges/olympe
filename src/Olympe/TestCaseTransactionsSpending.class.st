@@ -23,7 +23,7 @@ TestCaseTransactionsSpending >> setUp [
 { #category : #running }
 TestCaseTransactionsSpending >> testTransactionApplied [
 	| transaction |
-	transaction := OLNonAppliedTransaction new.
+	transaction := OLTransaction new.
 	transaction
 		sender: 'sender';
 		receiver: #'root.ledger';
