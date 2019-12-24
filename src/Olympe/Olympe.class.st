@@ -32,7 +32,9 @@ Olympe >> createBlock [
 { #category : #repositories }
 Olympe >> createRepository [
 	^ bestBlock
-		ifNil: [ OLDictionaryRepository new ]
+		ifNil: [ OLDictionaryRepository new
+				beFirst;
+				yourself ]
 		ifNotNil: [ (repository findByHash: bestBlock digest) createChild ]
 ]
 
@@ -82,6 +84,11 @@ Olympe >> privateSubmitBlock: anOLUnsubmittedBlock [
 	(bestBlock isNil or: [ bestBlock number < block number ])
 		ifTrue: [ bestBlock := block ].
 	^ block
+]
+
+{ #category : #accessing }
+Olympe >> repository [
+	^ repository
 ]
 
 { #category : #finding }

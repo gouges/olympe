@@ -24,6 +24,17 @@ OLDictionaryRepository >> atName: aHash put: aValue [
 ]
 
 { #category : #accessing }
+OLDictionaryRepository >> beFirst [
+
+	self
+		atName: #install:named:
+		put: (Message selector: #install:named:) asExecutable.
+	self
+		atName: #removeNamed:
+		put: (Message selector: #removeNamed:) asExecutable
+]
+
+{ #category : #accessing }
 OLDictionaryRepository >> content [
 	^ content ifNil: [ content := Dictionary new ]
 ]
@@ -72,12 +83,7 @@ OLDictionaryRepository >> initialize [
 	content := Dictionary new.
 	self atName: #self put: self.
 	self atName: #parent put: parent.
-	self
-		atName: #install:named:
-		put: (Message selector: #install:named:) asExecutable.
-	self
-		atName: #removeNamed:
-		put: (Message selector: #removeNamed:) asExecutable
+
 ]
 
 { #category : #accessing }

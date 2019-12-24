@@ -40,8 +40,10 @@ OLModule >> persistBlock: anOLBlock in: aRepository [
 
 { #category : #abstract }
 OLModule >> postCopy [
-	state := state copy.
-	^ self 
+	state := state class new
+		parent: state;
+		yourself.
+	^ self
 ]
 
 { #category : #access }
