@@ -6,7 +6,7 @@ Class {
 		'#parentHash => OLSerializableSlot type: OLHashType type',
 		'#nonce => OLSerializableSlot type: Integer type'
 	],
-	#category : #'Olympe-Core'
+	#category : #'Olympe-ProtoCore'
 }
 
 { #category : #accessing }

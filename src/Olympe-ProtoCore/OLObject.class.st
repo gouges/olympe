@@ -1,7 +1,7 @@
 Class {
 	#name : #OLObject,
 	#superclass : #Object,
-	#category : #'Olympe-Core'
+	#category : #'Olympe-ProtoCore'
 }
 
 { #category : #options }

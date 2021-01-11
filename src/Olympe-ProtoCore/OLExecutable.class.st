@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'message'
 	],
-	#category : #'Olympe-Core'
+	#category : #'Olympe-ProtoCore'
 }
 
 { #category : #executing }

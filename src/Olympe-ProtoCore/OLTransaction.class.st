@@ -8,7 +8,7 @@ Class {
 		'#arguments => OLSerializableSlot type: OLTupleType type',
 		'#gas => OLSerializableSlot type: Integer type'
 	],
-	#category : #'Olympe-Core'
+	#category : #'Olympe-ProtoCore'
 }
 
 { #category : #accessing }
